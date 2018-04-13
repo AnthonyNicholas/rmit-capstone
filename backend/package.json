@@ -1,0 +1,29 @@
+{
+  "name": "moneysmarts-api",
+  "version": "1.0.0",
+  "description": "Capstone project with Empower Wealth.",
+  "main": "index.js",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "cors": "^2.8.4",
+    "express": "^4.16.3",
+    "mongodb": "^3.0.5",
+    "morgan": "^1.9.0",
+    "nodemon": "^1.17.3",
+    "request": "^2.85.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AnthonyNicholas/capstone.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AnthonyNicholas/capstone/issues"
+  },
+  "homepage": "https://github.com/AnthonyNicholas/capstone#readme"
+}
