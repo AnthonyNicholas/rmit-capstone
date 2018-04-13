@@ -20,6 +20,7 @@ class YodleeApiHandler{
 
         //Configuration information for Yodlee API calls. 
         this.base_url = "https://developer.api.yodlee.com/ysl/"
+        this.bank_name = "Yodlee"; 
         this.login = "sbCobd282174b90963b29a8e8abe6a71d705eea"
         this.password = "8a852c48-1ab6-45ac-a28f-7bf545b1c553"
         this.testUser1_name = "sbMemd282174b90963b29a8e8abe6a71d705eea1"
@@ -199,7 +200,10 @@ class YodleeApiHandler{
         
         // Wait until we have both tokens, then proceed with callback that takes the token values as args.    
         Promise.all([p1, p2])
-            .then(function(arr){return {"cobSession": arr[0]['cobSession'], "userSession": arr[1]['userSession']}})
+            .then(function(arr){
+                console.log(arr);
+                return {"cobSession": arr[0]['cobSession'], "userSession": arr[1]['userSession']}
+                })
             .then(callback.bind(this));
     }
 
@@ -235,18 +239,15 @@ class YodleeApiHandler{
             .catch((error) => {
                 console.log("Error: " + error)
             })
-
-
    }
-
-
 
 
     /**
     * This function retrieves all banks accounts from yodlee
     * Input: auth object which has properties cobSession and userSession 
     */
- 
+
+/*
     getAccounts(auth){
        
         var accountOptions = Object.assign(this.defaultOptions); //clone options (do not want to change original default options object)
@@ -256,6 +257,7 @@ class YodleeApiHandler{
         request(accountOptions, this.saveAccountsToMongo);
 
    }
+*/
 
     /**
     * This function saves account information to Mongo
@@ -290,6 +292,7 @@ class YodleeApiHandler{
 
     uploadTransactions(auth){
 
+        
 
         var appResponse = this.appResponse;
         
@@ -305,13 +308,33 @@ class YodleeApiHandler{
 
         axios(transactionOptions)
             .then((response) => {
-                let now = this.now() 
-                let transactionData = { 
-                    'bank_name': 'yodlee', 
-                    'data': response.data.transaction, 
-                    'download_date': now
+                return response.data.transaction
+            })
+            .then((data) => {
+                let transactionData = [];
+                
+                for (var i = 0; i < data.length; i++){
+                    let d = data[i];
+                    console.log(d.merchant);
+                    transactionData[i] = {
+                        sourceId: d.id,
+                        date: d.date, 
+                        title: d.description.simple,
+                        amount: d.amount.amount,
+                        currency: d.amount.currenct,
+                        baseType: d.baseType, //CREDIT or DEBIT
+                        merchant: d.hasOwnProperty('merchant') ? d.merchant.name : null,
+                        categoryType: d.categoryType,
+                        category: d.category,
+                        bank: this.bankName,
+                        account: {
+                            accountId: d.accountId
+                        //    accountName: 
+                        //    accountType:
+                        }
+                    }
                 }
-                return transactionData
+                return transactionData;
             })
             .then((transactionData) => {
                 this.saveToMongo(transactionData, "yodlee_transactions");
@@ -319,6 +342,7 @@ class YodleeApiHandler{
                 return transactionData;
             })
             .catch((error) => {
+                this.appResponse.send("error");
                 console.log("Error: " + error)
             })
     }
