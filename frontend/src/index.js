@@ -6,7 +6,7 @@ var d3 = require('d3');
 
 var hostname = 'http://terra.bbqsuitcase.com:3001';
 
-/*
+
 var oneDay = 24*60*60*1000; // hours*minutes*seconds*milliseconds
 var baselineDate = new Date(2013, 10, 1);
 
@@ -15,7 +15,7 @@ function daysSinceBaseline(date){
 }
 
 function getDateFromTransaction(transaction){
-    var date;
+    var transactionDate;
 
     if (!transaction.date){
         transactionDate = new Date(2010,1,1);
@@ -23,11 +23,12 @@ function getDateFromTransaction(transaction){
         var dateArr = transaction.date.split("-");
         transactionDate = new Date(dateArr[0], dateArr[1], dateArr[2]);
     }
+    //console.log(transactionDate);
 
     return transactionDate;
 
 }
-*/
+
 
 class AccountTable extends React.Component {
 
@@ -41,7 +42,7 @@ class AccountTable extends React.Component {
   componentDidMount(){
     axios.get(hostname + '/yodlee_printAccounts')
             .then((response) => {
-                console.log(response.data[0].data);
+                //console.log(response.data[0].data);
                 return response.data[0].data.account;
             })
             .then(accounts => {
@@ -61,7 +62,7 @@ class AccountTable extends React.Component {
                 })  
 
                 this.setState({accounts: accountList});
-                console.log("state", this.state.accounts);
+                //console.log("state", this.state.accounts);
             })
   }
 
@@ -105,7 +106,7 @@ class TransactionTable extends React.Component {
   componentDidMount(){
     axios.get(hostname + '/yodlee_printTransactions')
             .then((response) => {
-                console.log(response.data[0].data);
+                //console.log(response.data[0].data);
                 return response.data[0].data;
             })
             .then(transactions => {
@@ -121,7 +122,7 @@ class TransactionTable extends React.Component {
                   
                     var days = daysSinceBaseline(transactionDate);
 
-                    console.log(days);
+                    //console.log(days);
                     return(
                              
                         <circle cx={days * 12} cy="100" r={Math.log(transaction.amount.amount)*3} stroke="black" stroke-width="3" fill="red" />
@@ -131,7 +132,7 @@ class TransactionTable extends React.Component {
                 })  
 
                 this.setState({transactions: transactionList});
-                console.log("state", this.state.transactions);
+                //console.log("state", this.state.transactions);
             })
             
   }
@@ -153,8 +154,8 @@ class TransactionTable extends React.Component {
 
 
 function getChartSize(el) {
-    let width = .9*parseInt(el.style('width'));
-    let height = .7*parseInt(width*7/9);
+    let width = .9*parseInt(el.style('width'), 10);
+    let height = .7*parseInt(width*7/9, 10);
     return  [width,height];
 }
 
@@ -169,7 +170,7 @@ class AxisX extends React.Component{
         var width = this.props.width  - margin.left - margin.right;
 
         var x = d3.scaleTime()
-            .domain([new Date(2013, 9, 1, 0), new Date(2018, 0, 1, 2)]) 
+            .domain([new Date(2013, 9, 1, 0), new Date(2014, 6, 1, 2)]) 
             .range([0, width]);
 
         var xAxis = d3.axisBottom(x);
@@ -195,7 +196,7 @@ class AxisY extends React.Component{
         var width = this.props.width  - margin.left - margin.right;
 
         var y = d3.scaleLinear()
-            .domain([0, 3000]) 
+            .domain([0, 100000]) 
             .range([height, 0]); //min and max are inverted due to browser axis starting from zero at top left rather than bottom left
 
         var yAxis = d3.axisLeft(y);
@@ -226,15 +227,17 @@ class Line extends React.Component{
         var height = this.props.height - margin.top - margin.bottom;
         var width = this.props.width  - margin.left - margin.right;
 
+        
+
         var x = d3.scaleTime()
-            .domain([new Date(2013, 9, 1, 0), new Date(2018, 0, 1, 2)]) 
+            .domain([new Date(2013, 9, 1, 0), new Date(2014, 6, 1, 2)]) 
             .range([0, width]);
 
         var y = d3.scaleLinear()
-            .domain([0, 3000]) 
+            .domain([0, 100000]) 
             .range([height, 0]);
 
-        var line = d3.svg.line()
+        var line = d3.line()
             .x(function(d) { return x(getDateFromTransaction(d)); })
             .y(function(d) { return y(d.amount.amount); });
 
@@ -246,7 +249,7 @@ class Line extends React.Component{
         */
 
         var newline = line(data);
-        console.log(newline);
+        //console.log(newline);
 
         return(
             <path className="line" d={newline}></path>
@@ -274,21 +277,20 @@ class Chart extends React.Component{
         };
     }
     
-    
-    resize(e) {
-            const container = this.state.container;
-            let chartWidth = getChartSize(container)[0];
-            let chartHeight = getChartSize(container)[1];
-
-            this.setState({
-                chartWidth: chartWidth,
-                chartHeight: chartHeight,
-            });
-    } 
-    
-
     componentDidMount() {
-        window.addEventListener('resize', this.resize);
+    
+        let resize = (e) => {
+                const container = this.state.container;
+                let chartWidth = getChartSize(container)[0];
+                let chartHeight = getChartSize(container)[1];
+
+                this.setState({
+                    chartWidth: chartWidth,
+                    chartHeight: chartHeight,
+                });
+        } 
+
+        window.addEventListener('resize', resize);
 
         const graph = d3.select("#chart");
         const container = d3.select("#root"); 
@@ -342,8 +344,8 @@ class Chart extends React.Component{
 ReactDOM.render(
 //<Game />,
 //<AccountTable />,
-<TransactionTable />,
-//    <Chart />,
+//<TransactionTable />,
+    <Chart />,
     document.getElementById('root')
 );
 
