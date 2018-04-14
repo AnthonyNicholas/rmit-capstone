@@ -239,7 +239,7 @@ class Line extends React.Component{
 
         var line = d3.line()
             .x(function(d) { return x(getDateFromTransaction(d)); })
-            .y(function(d) { return y(d.amount.amount); });
+            .y(function(d) { return y(d.amount); });
 
         /*
         data.forEach(function(d) {
@@ -309,7 +309,7 @@ class Chart extends React.Component{
                     container: container,
                     chartWidth: chartWidth,
                     chartHeight: chartHeight,
-                    data: response.data[0].data, //array of transactions
+                    data: response.data, //array of transactions
                     margin: margin
                 });
             })
