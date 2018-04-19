@@ -4,11 +4,15 @@ import './index.css';
 var axios = require('axios');
 var d3 = require('d3');
 
+
 var hostname = 'http://terra.bbqsuitcase.com:3001';
-
-
 var oneDay = 24*60*60*1000; // hours*minutes*seconds*milliseconds
 var baselineDate = new Date(2013, 10, 1);
+
+var transactionRange = [0, 1000]
+
+
+
 
 function daysSinceBaseline(date){
     return Math.round(Math.abs((date.getTime() - baselineDate.getTime())/(oneDay)));
@@ -196,7 +200,7 @@ class AxisY extends React.Component{
         var width = this.props.width  - margin.left - margin.right;
 
         var y = d3.scaleLinear()
-            .domain([0, 100000]) 
+            .domain(transactionRange) 
             .range([height, 0]); //min and max are inverted due to browser axis starting from zero at top left rather than bottom left
 
         var yAxis = d3.axisLeft(y);
@@ -234,7 +238,7 @@ class Line extends React.Component{
             .range([0, width]);
 
         var y = d3.scaleLinear()
-            .domain([0, 100000]) 
+            .domain(transactionRange) 
             .range([height, 0]);
 
         var line = d3.line()
@@ -267,16 +271,44 @@ class Chart extends React.Component{
         super(props);
         this.state = {
             graph: "",
+            categorySet: new Set(),
             container: "",
             chartWidth: 0,
             chartHeight: 0,
             x: NaN,
             y: NaN,
             data: [],
+            displayData: [],
             margin: {}
         };
+
+       this.didSelectCategory = this.didSelectCategory.bind(this);  
+
     }
-    
+   
+    /*
+    * This function is called by radio buttons which allow user to select a particular category of expenses.
+    * It filters state property data so that only data of the selected category is displayed.
+    */
+ 
+    didSelectCategory(e){
+
+//        console.log(e.currentTarget.value);
+        let categoryName = e.currentTarget.value;
+ 
+        let newData = this.state.data.filter((d) => {
+                    return d.category == categoryName               
+            });
+
+//        console.log(newData);
+//        console.log(this.state.categorySet);
+
+        this.setState({
+            displayData: newData
+        });
+
+    }
+ 
     componentDidMount() {
     
         let resize = (e) => {
@@ -304,12 +336,27 @@ class Chart extends React.Component{
 
         axios.get(hostname + '/yodlee_printTransactions')
             .then((response) => {
+                
+                let transactionArr = response.data;
+                let categorySet = new Set();
+               
+                console.log(response.data);
+ 
+                transactionArr.forEach((t)=>{
+                    categorySet.add(t.category);
+                });
+
+
+                console.log(categorySet);
+
                 this.setState({
                     graph: graph,
+                    categorySet: categorySet,
                     container: container,
                     chartWidth: chartWidth,
                     chartHeight: chartHeight,
-                    data: response.data, //array of transactions
+                    data: transactionArr, //array of transactions
+                    displayData: transactionArr, //array of transactions
                     margin: margin
                 });
             })
@@ -319,24 +366,44 @@ class Chart extends React.Component{
         var width = this.state.chartWidth;
         var height = this.state.chartHeight;
         var margin = this.state.margin;
-        var data = this.state.data;
+      
+        var categoryInputs = <input type="radio" name="categorySelection" value="hello" onChange={this.didSelectCategory}> Hello <br/>
+            
+        {/* if (this.state.categorySet.length > 0){
+            categoryInputs = <input type="radio" name = "categorySelection" value="hello" onChange={this.didSelectCategory}>
+        }*/}
+ 
         return(
-            <div>
-               <div id="chart">
+              <div id="chart">
+                <div>
                     <svg height={height} width={width} >
                         <g transform="translate(50,20)">
-                        <AxisX width={width} height={height} margin={margin} data={data}/>
-                        <AxisY width={width} height={height} margin={margin} data={data}/>
-                        <Line width={width} height={height} margin={margin} data={data}/>
+                        <AxisX width={width} height={height} margin={margin} data={this.state.displayData}/>
+                        <AxisY width={width} height={height} margin={margin} data={this.state.displayData}/>
+                        <Line width={width} height={height} margin={margin} data={this.state.displayData}/>
                         </g>
                     </svg>
                 </div>
+                <form>
+                    {categoryInputs}   
+                </form>
             </div>
-        );
+        )
     }
 }// End class
 
+{/*
+ <input type="radio" name = "categorySelection" value="INCOME" onChange={this.didSelectCategory}/> Income <br />
+                        <input type="radio" name = "categorySelection" value="TRANSFER" onChange={this.didSelectCategory}/> Transfer <br />
+*/              
 
+
+/*
+ //          categoryInputs = this.state.categorySet.map(category => {
+ //                           return <input type="radio" name = "categorySelection" value={category} onChange={this.didSelectCategory}/> Hi <br/>;
+ //                       })
+*/}
+ 
 
 
 // ========================================
