@@ -1,9 +1,6 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
 var axios = require('axios');
 var d3 = require('d3');
-
 
 var hostname = 'http://terra.bbqsuitcase.com:3001';
 var oneDay = 24*60*60*1000; // hours*minutes*seconds*milliseconds
