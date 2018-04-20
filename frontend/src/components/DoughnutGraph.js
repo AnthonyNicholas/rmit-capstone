@@ -1,17 +1,16 @@
 import React,{Component } from 'react';
 import { Button,Grid,Row, Col,ButtonToolbar } from 'react-bootstrap';
-var hostname = 'http://terra.bbqsuitcase.com:3001';
 var DoughnutChart = require("react-chartjs").Doughnut;
 
-class MyLineChart extends Component {
+class DoughnutGraph extends Component {
 
 	render(){
-		const transactions = this.props.transactions;
+		const doughnutDataset = this.props.doughnutDataset;
 		return(
 			<div>
 				<DoughnutChart 
-					data={transactions}
-					chartOptions={doughnutChartOptions}
+					data={doughnutDataset}
+					options={doughnutChartOptions}
 				/>
 			</div>
 			
@@ -19,7 +18,7 @@ class MyLineChart extends Component {
 	}
 }
 
-export default MyLineChart;
+export default DoughnutGraph;
 
 let doughnutChartOptions = {
 	//Boolean - Whether we should show a stroke on each segment
