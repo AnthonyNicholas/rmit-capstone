@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import logo from '../logo.svg';
 import '../App.css';
+import d3LineGraph from './d3LineGraph'
 import LineGraph from './LineGraph.js'
 import {showLineChart, lineChartOptions} from './ProcessLineChart.js'
 import DoughnutGraph from './DoughnutGraph.js'
@@ -50,7 +51,7 @@ class App extends Component {
       <div> Expenses Line Chart </div>
         <LineGraph lineDataset={this.state.lineDataset}/>
         <DoughnutGraph doughnutDataset={this.state.doughnutDataset}/>
-        
+        <d3LineGraph/>  
       </div>
     );
   }
