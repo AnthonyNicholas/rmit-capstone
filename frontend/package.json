@@ -1,14 +1,27 @@
 {
-  "name": "tictactoe",
+  "name": "money-smart",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
     "axios": "^0.18.0",
+    "bootstrap": "^3.3.7",
+    "chart.js": "^1.1.1",
+    "color": "^3.0.0",
+    "d3": "^5.1.0",
     "cors": "^2.8.4",
-    "d3": "^5.0.0",
+    "randomcolor": "^0.5.3",
     "react": "^16.3.1",
+    "react-bootstrap": "^0.32.1",
+    "react-chartjs": "^1.2.0",
+    "react-chartjs-2": "^2.7.0",
+    "react-d3-basic": "^1.6.11",
     "react-dom": "^16.3.1",
-    "react-scripts": "1.1.4"
+    "react-icons-kit": "^1.0.7",
+    "react-md": "^1.2.13",
+    "react-navigation": "^1.5.11",
+    "react-scripts": "1.1.4",
+    "react-sidebar": "^2.3.2",
+    "react-sidenav": "^2.1.2"
   },
   "scripts": {
     "start": "react-scripts start",
