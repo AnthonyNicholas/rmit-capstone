@@ -1,9 +1,121 @@
 /* css */
 
 body {
-  font: 14px "Century Gothic", Futura, sans-serif;
-  margin: 20px;
-  padding: 0;
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    background-color: gainsboro;
+}
+
+.mainDiv{
+    background-color: white;
+}
+
+
+h1, .h1{
+    margin: 0px!important;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    padding: 13px 15px 15px 30px!important;
+    font-size: 165%!important;
+    color: white!important;
+    font-weight: bolder!important;
+    font-family: 'IBM Plex Sans Condensed', sans-serif!important;
+
+}
+
+
+.mainHeader{
+    height: 50px;
+    width: 100%;
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#000000+69,f47711+100 */
+    background: #000000; /* Old browsers */
+    background: -moz-linear-gradient(left, #000000 69%, #f47711 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(left, #000000 69%,#f47711 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to right, #000000 69%,#f47711 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', endColorstr='#f47711',GradientType=1 ); /* IE6-9 */
+
+}
+
+.App {
+    text-align: center;
+}
+
+
+.App-header {
+    color: white;
+    z-index: 3;
+}
+.App-title {
+    text-align: left;
+    color: white;
+    width: 100%;
+    margin: 0px;
+}
+
+
+/* The sidebar menu */
+.sidenav {
+    height: 100%; /* Full-height: remove this if you want "auto" height */
+    width: 200px; /* Set the width of the sidebar */
+    position: fixed; /* Fixed Sidebar (stay in place on scroll) */
+    z-index: 5; /* Stay on top */
+    top: 0; /* Stay at the top */
+    left: 0;
+    background-color: black; /* Black */
+    overflow-x: hidden; /* Disable horizontal scroll */
+    padding-top: 50px;
+}
+
+.linkWrap{
+    border-top: .5px solid #2E2A26;
+    border-bottom: .5px solid #2E2A26;
+
+}
+
+/* The navigation menu links */
+.sidenav a {
+    padding: 15px 5px 16px 30px;
+    text-decoration: none;
+    font-size: 20px;
+    color: cornsilk;
+    display: block;
+    font-family: 'IBM Plex Sans Condensed', sans-serif;
+
+}
+
+/* When you mouse over the navigation links, change their color */
+.sidenav .a:hover{
+    color: #f47711;
+
+}
+
+.linkWrap:hover{
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#000000+62,e27d10+98,e27d10+100 */
+    background: #000000; /* Old browsers */
+    background: -moz-linear-gradient(left, #000000 62%, #e27d10 98%, #e27d10 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(left, #000000 62%,#e27d10 98%,#e27d10 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to right, #000000 62%,#e27d10 98%,#e27d10 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', endColorstr='#e27d10',GradientType=1 ); /* IE6-9 */
+    font-size: 4em;
+
+
+}
+/* Style page content */
+.main {
+    /*margin-left: 200px; !* Same as the width of the sidebar *!*/
+    padding: 0px 10px;
+}
+
+/* On smaller screens, where height is less than 450px, change the style of the sidebar (less padding and a smaller font size) */
+@media screen and (max-height: 450px) {
+    .sidenav {padding-top: 15px;}
+    .sidenav a {font-size: 18px;}
+}
+
+@keyframes App-logo-spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
 }
 
 ol, ul {
@@ -73,4 +185,3 @@ body {
     stroke: steelblue;
     stroke-width: 1.5px;
 }
-

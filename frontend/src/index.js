@@ -9,7 +9,8 @@ import App from './components/App';
 import d3LineGraph from './components/d3LineGraph.js'
 
 ReactDOM.render(
-        [<App />, 
+
+    [<App />,
         <d3LineGraph />],
         document.getElementById('root'));
 

@@ -1,3 +1,70 @@
+.rootWrapper{
+  box-shadow:1px 1px 1px 1px grey;
+  background-color: white;
+  height: 600px;
+  width:  100%;
+  margin: 0px;
+}
+
+.buttonDoughnutWrapper{
+  display: table-cell;
+  position: relative;
+  height:100%;
+  margin-left: -50%;
+  margin-right: -50%;
+  padding: 50px;
+}
+
+.sideButtonNav{
+  box-shadow:0.5px 0.5px 0.5px 0.5px grey;
+  background-color: whitesmoke;
+  width: 200px;
+  height: 100%;
+  display: table-cell;
+  margin: 0px;
+  float: left;
+}
+.accountButtons{
+  background-color: whitesmoke;
+  height: 100%;
+  width: 200px;
+}
+Button, .Button, button, .button, btn, .btn{
+
+  align-items: center!important;
+  margin: 0px 50px 0px 0px!important;
+  font-size: 150%;
+  font-weight: lighter;
+  font-family: 'IBM Plex Sans Condensed', sans-serif;
+  width: 100%;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  height: 100px;
+  font-size: 20px;
+
+}
+
+Button:hover, .Button:hover, button:hover, .button:hover{
+  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#000000+0,000000+0,000000+100&0+54,0.65+100 */
+  background: -moz-linear-gradient(left, rgba(0,0,0,0) 0%, rgba(0,0,0,0) 54%, rgba(0,0,0,0.65) 100%); /* FF3.6-15 */
+  background: -webkit-linear-gradient(left, rgba(0,0,0,0) 0%,rgba(0,0,0,0) 54%,rgba(0,0,0,0.65) 100%); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to right, rgba(0,0,0,0) 0%,rgba(0,0,0,0) 54%,rgba(0,0,0,0.65) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#a6000000',GradientType=1 ); /* IE6-9 */
+
+}
+canvas, .canvas{
+  width: 100%;
+
+}
+.doughnutWrapper{
+  position: relative;
+  height:100%;
+  width:100%;
+  display: flex;
+  float: right;
+  margin-top:50px;
+  margin-right: 50%;
+}
 .App {
   text-align: center;
 }
@@ -26,3 +93,24 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+
+
+body {
+  margin-left: 200px;
+  padding: 0px;
+}
+
+.h2, h2 {
+  font-size: 150%;
+  color: white;
+  font-weight: lighter;
+  font-family: 'IBM Plex Sans Condensed', sans-serif;
+  padding: 15px 10px 10px 20px;
+}
+.rootHeader{
+  box-shadow:2px 2px 2px 2px grey;
+  background-color: darkgrey;
+  margin: 20px;
+}
+

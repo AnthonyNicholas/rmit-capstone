@@ -7,8 +7,8 @@
     "bootstrap": "^3.3.7",
     "chart.js": "^1.1.1",
     "color": "^3.0.0",
-    "d3": "^5.1.0",
     "cors": "^2.8.4",
+    "d3": "^5.1.0",
     "randomcolor": "^0.5.3",
     "react": "^16.3.1",
     "react-bootstrap": "^0.32.1",
@@ -19,6 +19,7 @@
     "react-icons-kit": "^1.0.7",
     "react-md": "^1.2.13",
     "react-navigation": "^1.5.11",
+    "react-router-dom": "^4.2.2",
     "react-scripts": "1.1.4",
     "react-sidebar": "^2.3.2",
     "react-sidenav": "^2.1.2"

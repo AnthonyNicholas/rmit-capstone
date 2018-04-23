@@ -45,13 +45,16 @@ export const lineChartOptions = {
 	datasetStrokeWidth : 2,
 
 	//Boolean - Whether to fill the dataset with a colour
-	datasetFill : true,
-	
+	datasetFill : false,
+
+	showlegends: true,
 	//String - A legend template
 	legendTemplate : "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].strokeColor%>\"><%if(datasets[i].label){%><%=datasets[i].label%><%}%></span></li><%}%></ul>",
 
 	//Boolean - Whether to horizontally center the label and point dot inside the grid
-	offsetGridLines : false
+	offsetGridLines : false,
+
+	responsive: true
 }
 
 export function processDatasetTolineChart(transaction,categoryType){

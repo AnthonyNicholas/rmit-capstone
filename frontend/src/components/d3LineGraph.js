@@ -1,4 +1,5 @@
 import React from 'react';
+import {withRouter} from 'react-router-dom';
 var axios = require('axios');
 var d3 = require('d3');
 
@@ -37,6 +38,7 @@ class AccountTable extends React.Component {
     super(props);
     this.state = {
         accounts: [],
+        active: false
     };
   }
 
@@ -276,7 +278,8 @@ class d3LineGraph extends React.Component{
             y: NaN,
             data: [],
             displayData: [],
-            margin: {}
+            margin: {},
+            active: false
         };
 
        this.didSelectCategory = this.didSelectCategory.bind(this);  
