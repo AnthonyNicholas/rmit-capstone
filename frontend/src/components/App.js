@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import logo from '../logo.svg';
 import '../App.css';
-import d3LineGraph from './d3LineGraph'
+import D3LineGraph from './D3LineGraph'
 import LineGraph from './LineGraph.js'
 import {showLineChart, lineChartOptions} from './ProcessLineChart.js'
 import DoughnutGraph from './DoughnutGraph.js'
@@ -49,7 +49,7 @@ class App extends Component {
       <div> Expenses Line Chart </div>
         <LineGraph lineDataset={this.state.lineDataset} legendPosition="bottom" redraw/>
         <DoughnutGraph doughnutDataset={ this.state.doughnutDataset } legendPosition="bottom" redraw />
-        <d3LineGraph/>  
+        <D3LineGraph/>  
       </div>
     );
   }
