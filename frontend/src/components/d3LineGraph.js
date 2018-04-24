@@ -268,7 +268,7 @@ class d3LineGraph extends React.Component{
         super(props);
         this.state = {
             graph: "",
-            categorySet: new Set(),
+            categoryArray: [],
             container: "",
             chartWidth: 0,
             chartHeight: 0,
@@ -298,7 +298,7 @@ class d3LineGraph extends React.Component{
             });
 
 //        console.log(newData);
-//        console.log(this.state.categorySet);
+//        console.log(this.state.categoryArray);
 
         this.setState({
             displayData: newData
@@ -342,13 +342,14 @@ class d3LineGraph extends React.Component{
                 transactionArr.forEach((t)=>{
                     categorySet.add(t.category);
                 });
+                
+                var categoryArray = [...categorySet];
 
-
-                console.log(categorySet);
+                console.log(categoryArray);
 
                 this.setState({
                     graph: graph,
-                    categorySet: categorySet,
+                    categoryArray: categoryArray,
                     container: container,
                     chartWidth: chartWidth,
                     chartHeight: chartHeight,
@@ -356,20 +357,29 @@ class d3LineGraph extends React.Component{
                     displayData: transactionArr, //array of transactions
                     margin: margin
                 });
+
+
             })
     }
 
     render() {
         var width = this.state.chartWidth;
         var height = this.state.chartHeight;
-        var margin = this.state.margin;
-      
-        var categoryInputs = <input type="radio" name="categorySelection" value="hello" onChange={this.didSelectCategory}> Hello </input>
-            
-        {/* if (this.state.categorySet.length > 0){
-            categoryInputs = <input type="radio" name = "categorySelection" value="hello" onChange={this.didSelectCategory}>
-        }*/}
- 
+        var margin = this.state.margin;     
+        var categoryInputs = this.state.categoryArray.map(category => {
+       
+       
+        console.log(category.split(" ").join(""))
+        return(
+                <div> 
+                    <input type="radio" id={category.split(" ").join("")} name="CategoryRadio" value={category} onChange={this.didSelectCategory}/>
+                    <label for={category.split(" ").join("")}>{category}</label>
+                </div>)
+        })
+
+
+        console.log(categoryInputs)
+        
         return(
               <div id="chart">
                 <div>
@@ -388,6 +398,4 @@ class d3LineGraph extends React.Component{
         )
     }
 }// End class
-
-
 export default d3LineGraph
