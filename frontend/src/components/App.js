@@ -4,10 +4,10 @@ import '../App.css';
 import LineGraph from './LineGraph.js'
 import {showLineChart, lineChartOptions} from './ProcessLineChart.js'
 import DoughnutGraph from './DoughnutGraph.js'
+import {produceDataForDoughnutChart} from './ProcessDoughnutChart.js'
 import {showDoughnutChart} from './ProcessDoughnutChart.js';
 import {withRouter} from 'react-router-dom';
 import {Button, Grid, Row, Col, ButtonToolbar, ButtonGroup} from 'react-bootstrap';
-// import Harry from './Harry.js'
 
 var axios = require('axios');
 var hostname = 'http://terra.bbqsuitcase.com:3001';
@@ -29,7 +29,7 @@ class App extends Component {
         this.loadData();
     }
 
-    loadData() {
+    loadData(){
         axios.get(hostname + '/yodlee_printTransactions')
             .then((response) => {
                 return response.data;
@@ -38,7 +38,7 @@ class App extends Component {
             .then((trans) => {
                 console.log(trans);
 
-                var doughnutDataset = showDoughnutChart(trans);
+                var doughnutDataset = produceDataForDoughnutChart(trans);
                 var lineDataset = showLineChart(trans);
 
                 //populating transactions data
@@ -83,13 +83,12 @@ class App extends Component {
                         {(this.state.isOpen === "line") ? (
 
                                 <div class="doughnutWrapper" data-reactid=".5">
-                                    <LineGraph lineDataset={this.state.lineDataset}/>
+                                    <LineGraph lineDataset={this.state.lineDataset} legendPosition="bottom" redraw/>
                                 </div>
                             )
                             : this.state.isOpen === "doughnut" ? (
                                     <div class="doughnutWrapper" data-reactid=".5">
-                                        <DoughnutGraph class="doughnutChart"
-                                                       doughnutDataset={this.state.doughnutDataset}/>
+                                        <DoughnutGraph doughnutDataset={ this.state.doughnutDataset } legendPosition="bottom" redraw />
                                     </div>
                                 )
                                 : null

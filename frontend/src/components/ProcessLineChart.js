@@ -54,7 +54,17 @@ export const lineChartOptions = {
 	//Boolean - Whether to horizontally center the label and point dot inside the grid
 	offsetGridLines : false,
 
-	responsive: true
+
+	responsive: true,
+	title:{
+	    display:true,
+	    text:'Total Expense by Months',
+    	fontSize:25
+    },
+    legend:{
+    	display:true,
+    	position:"right"
+  	}
 }
 
 export function processDatasetTolineChart(transaction,categoryType){
@@ -124,31 +134,26 @@ export function showLineChart(transactionData){
 		var expenseDataset = processDatasetTolineChart(transactionData,"EXPENSE");
 		var incomeDataset = processDatasetTolineChart(transactionData,"INCOME");
 
-		console.log("expenseData" + expenseDataset);
-		console.log("incomeData" + incomeDataset);
-
 	var lineData = {
 		labels: monthNames,
 		datasets: [
 			{
 				label: "My Expense",
-				fillColor: "rgba(151,187,205,0.2)",
-				strokeColor: "rgba(151,187,205,1)",
-				pointColor: "rgba(151,187,205,1)",
-				pointStrokeColor: "#fff",
-				pointHighlightFill: "#fff",
-				pointHighlightStroke: "rgba(151,187,205,1)",
-				data: expenseDataset
+				data: expenseDataset,
+				backgroundColor:[
+			      'rgba(153, 102, 255, 0.6)',
+		          'rgba(255, 159, 64, 0.6)',
+		        ]
+				
 			},
 			{
 				label: "My Income",
-				fillColor: "rgba(151,187,205,0.2)",
-				strokeColor: "#ff0000",
-				pointColor: "#ff0000",
-				pointStrokeColor: "#fff",
-				pointHighlightFill: "#fff",
-				pointHighlightStroke: "rgba(151,187,205,1)",
-				data: incomeDataset //Income transaction data based Months
+				data: incomeDataset, //Income transaction data based Months
+					backgroundColor:[
+		          'rgba(255, 99, 132, 0.6)',
+		          'rgba(54, 162, 235, 0.6)',
+		        ]
+				
 			}
 		]
 	}

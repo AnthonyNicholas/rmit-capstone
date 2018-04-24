@@ -1,4 +1,4 @@
-var randomColor = require('randomcolor');
+import {randomColor} from "randomcolor";
 
 //referencing: https://stackoverflow.com/questions/5560248/programmatically-lighten-or-darken-a-hex-color-or-rgb-and-blend-colors
 //used for educational purposes only
@@ -23,7 +23,6 @@ function getExpenseCategories(transactionData){
 		if(transaction.categoryType == "EXPENSE"){
 			categoryData.push(transaction.category);;
 		}
-
 	})
 
 	categoryData = Array.from(new Set(categoryData));
@@ -82,24 +81,63 @@ function feedToDoughnut(categoryName,amount){
         }
 
     return data;
+
 }
 
-export function showDoughnutChart(transactions){
-	var mapToGraph = [];
-	var expenseCategories;
-	var dataFeed = [];
+function getLabelsForDoughutChart(data){
+	var labels =[];
+	var categories;
 
-	expenseCategories = getExpenseCategories(transactions);
+	categories = getExpenseCategories(data);
 
-	expenseCategories.map((cat) => {
-
-	dataFeed = feedToDoughnut(cat.name, cat.amount);
-	mapToGraph = mapToGraph.slice();
-	mapToGraph.push(dataFeed);
-
+	categories.map((cat) => {
+		labels.push(cat.name);
 	})
 
-	return mapToGraph;
-
+	return labels;
 }
+
+
+function getValuesForDoughutChart(data){
+	var values =[];
+	var categories;
+
+	categories = getExpenseCategories(data);
+
+	categories.map((cat) => {
+		values.push(cat.amount);
+	})
+
+	return values;
+}
+
+export function produceDataForDoughnutChart(data){
+	var labels = getLabelsForDoughutChart(data);
+	var values = getValuesForDoughutChart(data);
+
+    var data = {
+	    labels: labels,
+	    datasets:[
+	      {
+	        label:'Population',
+	        data: values,
+	        backgroundColor:[
+	          'rgba(255, 99, 132, 0.6)',
+	          'rgba(54, 162, 235, 0.6)',
+	          'rgba(255, 206, 86, 0.6)',
+	          'rgba(75, 192, 192, 0.6)',
+	          'rgba(153, 102, 255, 0.6)',
+	          'rgba(255, 159, 64, 0.6)',
+	          'rgba(255, 99, 132, 0.6)',
+	          'rgba(255, 99, 132, 0.6)',
+	          'rgba(54, 162, 235, 0.6)',
+	          'rgba(255, 206, 86, 0.6)'
+	        ]
+	      }
+	    ]
+    }
+
+    return data;
+ }
+
 
