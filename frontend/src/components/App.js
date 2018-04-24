@@ -4,14 +4,14 @@ import '../App.css';
 import LineGraph from './LineGraph.js'
 import {showLineChart, lineChartOptions} from './ProcessLineChart.js'
 import DoughnutGraph from './DoughnutGraph.js'
+import {produceDataForDoughnutChart} from './ProcessDoughnutChart.js'
 import {showDoughnutChart} from './ProcessDoughnutChart.js';
-// import Harry from './Harry.js'
 
 var axios = require('axios');
 var hostname = 'http://terra.bbqsuitcase.com:3001';
 
 class App extends Component {
-	 
+   
   constructor(props) {
     super(props);
       this.state = {
@@ -33,7 +33,7 @@ class App extends Component {
           .then((trans) => {
             console.log(trans);
 
-            var doughnutDataset = showDoughnutChart(trans);
+            var doughnutDataset = produceDataForDoughnutChart(trans);
             var lineDataset = showLineChart(trans);
              
             //populating transactions data
@@ -42,14 +42,12 @@ class App extends Component {
           });
   }
 
-
-
   render() {
     return (
       <div className="App">
       <div> Expenses Line Chart </div>
-        <LineGraph lineDataset={this.state.lineDataset}/>
-        <DoughnutGraph doughnutDataset={this.state.doughnutDataset}/>
+        <LineGraph lineDataset={this.state.lineDataset} legendPosition="bottom" redraw/>
+        <DoughnutGraph doughnutDataset={ this.state.doughnutDataset } legendPosition="bottom" redraw />
         
       </div>
     );

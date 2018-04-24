@@ -364,7 +364,7 @@ class d3LineGraph extends React.Component{
         var height = this.state.chartHeight;
         var margin = this.state.margin;
       
-        var categoryInputs = <input type="radio" name="categorySelection" value="hello" onChange={this.didSelectCategory}> Hello <br/>
+        var categoryInputs = <input type="radio" name="categorySelection" value="hello" onChange={this.didSelectCategory}> Hello </input>
             
         {/* if (this.state.categorySet.length > 0){
             categoryInputs = <input type="radio" name = "categorySelection" value="hello" onChange={this.didSelectCategory}>
