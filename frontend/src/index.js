@@ -6,11 +6,7 @@ import 'bootstrap/dist/css/bootstrap-theme.css';
 import registerServiceWorker from './registerServiceWorker';
 
 import App from './components/App';
-import d3LineGraph from './components/d3LineGraph.js'
 
-ReactDOM.render(
-        [<App />, 
-        <d3LineGraph />],
-        document.getElementById('root'));
+ReactDOM.render(<App />,document.getElementById('root'));
 
 registerServiceWorker();
