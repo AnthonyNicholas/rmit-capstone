@@ -365,21 +365,22 @@ class d3LineGraph extends React.Component{
     render() {
         var width = this.state.chartWidth;
         var height = this.state.chartHeight;
-        var margin = this.state.margin;     
+        var margin = this.state.margin;
+        
         var categoryInputs = this.state.categoryArray.map(category => {
        
        
-        console.log(category.split(" ").join(""))
-        return(
-                <div> 
-                    <input type="radio" id={category.split(" ").join("")} name="CategoryRadio" value={category} onChange={this.didSelectCategory}/>
-                    <label for={category.split(" ").join("")}>{category}</label>
-                </div>)
-        })
+                        console.log(category.split(" ").join(""))
+                        return(
+                                <div> 
+                                    <input type="radio" id={category.split(" ").join("")} name="CategoryRadio" value={category} onChange={this.didSelectCategory}/>
+                                    <label for={category.split(" ").join("")}>{category}</label>
+                                </div>)
+                        })
 
 
         console.log(categoryInputs)
-        
+
         return(
               <div id="chart">
                 <div>
