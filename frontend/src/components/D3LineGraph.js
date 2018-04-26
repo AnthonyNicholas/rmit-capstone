@@ -262,7 +262,7 @@ class Line extends React.Component{
 /* The chart object contains the graph showing the transaction data
 */
 
-class d3LineGraph extends React.Component{
+class D3LineGraph extends React.Component{
 
     constructor(props) {
         super(props);
@@ -399,4 +399,4 @@ class d3LineGraph extends React.Component{
         )
     }
 }// End class
-export default d3LineGraph
+export default D3LineGraph
