@@ -3,6 +3,8 @@ let monthNames = ["January", "February", "March", "April", "May", "June",
   "July", "August", "September", "October", "November", "December"
 ];
 
+var dateLabels =[];
+
 export const lineChartOptions = {
 
 	///Boolean - Whether grid lines are shown across the chart
@@ -58,84 +60,128 @@ export const lineChartOptions = {
 	responsive: true,
 	title:{
 	    display:true,
-	    text:'Total Expense by Months',
+	    text:'Total Expense and Income',
     	fontSize:25
     },
     legend:{
     	display:true,
     	position:"right"
-  	}
+  	},
+    scales: {
+        xAxes: [{
+            ticks: {
+                stepSize: 500, //<-- set this
+            }
+        }]
+    }
+}
+
+var processDateArray = function(date1, date2){
+    if (date1 > date2) return 1;
+    if (date1 < date2) return -1;
+    return 0;
+}
+
+function formatDate(date) {
+    var monthNames = [
+        "January", "February", "March",
+        "April", "May", "June", "July",
+        "August", "September", "October",
+        "November", "December"
+    ];
+
+    var day = date.getDate();
+    var monthIndex = date.getMonth();
+    var year = date.getFullYear();
+
+    return day + ' ' + monthNames[monthIndex] + ' ' + year;
 }
 
 export function processDatasetTolineChart(transaction,categoryType){
-	var filteredExpense = [];
+    var filteredExpense = [];
     var temp = [];
     var refinedData =[];
     var dataFeed=[];
     var ifFound = false;
     var monthNotFound = 0;
-    
-    transaction.map((trans) => {
-    	if(trans.categoryType == categoryType){
-			var object = {};
 
-			var dateArr = trans.date.split("-");
-			var transactionDate = new Date(dateArr[0], dateArr[1], dateArr[2]);
-			var month = monthNames[transactionDate.getMonth()];
-			object["month"] = month;
-			object["amount"] = trans.amount;
-			temp.push(object);
-		    filteredExpense.push(month);
-    	}
+    transaction.map((trans) => {
+        if(trans.categoryType == categoryType){
+            var object = {};
+            // var dateArr = trans.date.split("-");
+            var transactionDate = new Date(trans.date);
+            var formattedTransDate = formatDate(transactionDate);
+            // var dateTrans = transactionDate.getDate();
+            object["date"] = transactionDate;
+            object["amount"] = trans.amount;
+            temp.push(object);
+            dateLabels.push(transactionDate);
+            filteredExpense.push(transactionDate);
+            // console.log(object["date"]);
+        }
     })
 
     //get all the months from transactions
     filteredExpense = Array.from(new Set(filteredExpense));
-    
+
 
     filteredExpense.map((trans) => {
-    	var obj = {};
-    	obj["month"] = trans;
-    	obj["amount"] = 0;
-    	refinedData.push(obj);
+        var obj = {};
+        obj["date"] = trans;
+        obj["amount"] = 0;
+        refinedData.push(obj);
     })
 
     temp.map((trans) => {
-    	refinedData.map((chartValue) => {
-    		if(trans.month == chartValue.month){
-    			chartValue.amount += trans.amount;
-    		}
-    	})
+        refinedData.map((chartValue) => {
+            if(trans.date == chartValue.date){
+                chartValue.amount += trans.amount;
+            }
+        })
     })
 
-    monthNames.map((month)=>{
-		refinedData.map((income)=>{
-			if(month == income.month){
-				dataFeed.push(income.amount);
-				ifFound = true;
-			}
-		})
+    dateLabels = dateLabels.sort(processDateArray);
+    dateLabels.map((date)=>{
+        refinedData.map((income)=>{
+            if(date == income.date){
+                dataFeed.push(income.amount);
+                ifFound = true;
+            }
+        })
 
-		if(!ifFound){
-			dataFeed.push(monthNotFound);
-		}
+        if(!ifFound){
+            dataFeed.push(monthNotFound);
+        }
 
-		ifFound = false;
-	})
-   
-	return dataFeed;
+        ifFound = false;
+    })
+
+    return dataFeed;
 }
 
 export function showLineChart(transactionData){
 
 	var ifFound = false;
 	var monthNotFound = 0;
+	var formattedDate = [];
+
+
+
+
 
 		var expenseDataset = processDatasetTolineChart(transactionData,"EXPENSE");
 		var incomeDataset = processDatasetTolineChart(transactionData,"INCOME");
 
+
+    dateLabels.map((date) => {
+        var d = formatDate(date);
+        formattedDate.push(d);
+    })
+
+    console.log(formattedDate);
+
 	var lineData = {
-		labels: monthNames,
+		labels: formattedDate,
 		datasets: [
 			{
 				label: "My Expense",

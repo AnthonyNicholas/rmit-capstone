@@ -27,9 +27,11 @@ class DoughnutGraph extends Component {
               legend:{
                 display:this.props.displayLegend,
                 position:this.props.legendPosition
-              }
+              },
+                cutoutPercentage:25,
+                responsive: true,
             }}
-          />å
+          />
       </div>
     );
   }

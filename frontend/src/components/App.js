@@ -83,12 +83,12 @@ class App extends Component {
                         {(this.state.isOpen === "line") ? (
 
                                 <div class="doughnutWrapper" data-reactid=".5">
-                                    <LineGraph lineDataset={this.state.lineDataset} legendPosition="bottom" redraw/>
+                                    <LineGraph lineDataset={this.state.lineDataset} legendPosition="right" redraw/>
                                 </div>
                             )
                             : this.state.isOpen === "doughnut" ? (
                                     <div class="doughnutWrapper" data-reactid=".5">
-                                        <DoughnutGraph doughnutDataset={ this.state.doughnutDataset } legendPosition="bottom" redraw />
+                                        <DoughnutGraph doughnutDataset={ this.state.doughnutDataset } legendPosition="right" redraw />
                                     </div>
                                 )
                                 : null
