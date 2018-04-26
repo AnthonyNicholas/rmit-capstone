@@ -1,55 +1,40 @@
-import React,{Component } from 'react';
+import React, {Component} from 'react';
+import {Doughnut} from 'react-chartjs-2';
 import { Button,Grid,Row, Col,ButtonToolbar } from 'react-bootstrap';
-var DoughnutChart = require("react-chartjs").Doughnut;
+import './Chart.css'
+import {withRouter} from 'react-router-dom';
 
 class DoughnutGraph extends Component {
 
-	render(){
-		const doughnutDataset = this.props.doughnutDataset;
-		return(
-			<div>
-				<DoughnutChart 
-					data={doughnutDataset}
-					options={doughnutChartOptions}
-				/>
-			</div>
-			
-		);
-	}
+  static defaultProps = {
+    displayTitle:true,
+    displayLegend: true,
+    legendPosition:'right',
+  }
+
+  render(){
+  const doughnutDataset = this.props.doughnutDataset;
+    return(
+      <div className="chart">
+        <Doughnut
+            data={this.props.doughnutDataset}
+            options={{
+              title:{
+                display:this.props.displayTitle,
+                text:'Total Expense',
+                fontSize:25
+              },
+              legend:{
+                display:this.props.displayLegend,
+                position:this.props.legendPosition
+              },
+                cutoutPercentage:25,
+                responsive: true,
+            }}
+          />
+      </div>
+    );
+  }
 }
 
 export default DoughnutGraph;
-
-let doughnutChartOptions = {
-	//Boolean - Whether we should show a stroke on each segment
-	segmentShowStroke : true,
-
-	//String - The colour of each segment stroke
-	segmentStrokeColor : "black",
-
-	//Number - The width of each segment stroke
-	segmentStrokeWidth : 1,
-
-	//Number - The percentage of the chart that we cut out of the middle
-	percentageInnerCutout : 40, // This is 0 for Pie charts
-
-	//Number - Amount of animation steps
-	animationSteps : 100,
-
-	//String - Animation easing effect
-	animationEasing : "easeOutBounce",
-
-	//Boolean - Whether we animate the rotation of the Doughnut
-	animateRotate : true,
-
-	//Boolean - Whether we animate scaling the Doughnut from the centre
-	animateScale : true,
-
-	maintainAspectRatio: true,
-
-	responsive: false,
-	
-	//String - A legend template
-	legendTemplate : "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<segments.length; i++){%><li><span style=\"background-color:<%=segments[i].fillColor%>\"><%if(segments[i].label){%><%=segments[i].label%><%}%></span></li><%}%></ul>"
-	
-}

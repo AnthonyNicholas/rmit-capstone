@@ -8,8 +8,6 @@ import registerServiceWorker from './registerServiceWorker';
 import App from './components/App';
 import D3LineGraph from './components/D3LineGraph.js'
 
-ReactDOM.render(
-        <App />, 
-        document.getElementById('root'));
+ReactDOM.render(<App />,document.getElementById('root'));
 
 registerServiceWorker();
