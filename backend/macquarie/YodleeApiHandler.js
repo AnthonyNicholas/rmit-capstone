@@ -25,11 +25,8 @@ class YodleeApiHandler{
         this.password = "8a852c48-1ab6-45ac-a28f-7bf545b1c553"
         this.testUser1_name = "sbMemd282174b90963b29a8e8abe6a71d705eea1"
         this.testUser1_pwd = "sbMemd282174b90963b29a8e8abe6a71d705eea1#123"
-        this.cobsession = null;
-        this.cobSessionToken = '08062013_0:cef9ae910f27c3daad6b4e62ea83eaf7db832ecc7693b6b4d65f0e4' + 
-                    'cbdbdd24f1f133e8c2ae1cb16b061c3f400c26d33eb193e28b21f08608c4913bc9d155ece'; // TEMP -this will be loaded from db
-        this.userSessionToken = '08062013_0:366aeada427404941abca1d987889c392a12a4bf236992161cab8256d9ef4daed1' + 
-                    'b8e9119267b247c05e552adce0639f01e90ededb1883f8881d38cc205ad37e'; // TEMP -this will be loaded from db
+        this.testUser2_name = "sbMemd282174b90963b29a8e8abe6a71d705eea2"
+        this.testUser2_pwd = "sbMemd282174b90963b29a8e8abe6a71d705eea2#123"
         this.appResponse
 
         //Default options to post https requests
@@ -51,6 +48,7 @@ class YodleeApiHandler{
                     Accept: 'application/json',
                     Connection: 'keep-alive',
                     Host: 'developer.api.yodlee.com' },
+                params: {},
                 body: {}, 
                 json: true
         };
@@ -124,8 +122,8 @@ class YodleeApiHandler{
         var userOptions = Object.assign(this.defaultOptions); //clone options (do not want to change original default options object)
         userOptions.url = this.base_url + 'user/login';
         userOptions.data = { user: { 
-                                loginName: this.testUser1_name,
-                                password: this.testUser1_pwd } };
+                                loginName: this.testUser2_name,
+                                password: this.testUser2_pwd } };
  
         // Yodlee requires cobToken to get userToken - so retreieve from db
         let fetchCobToken = new Promise((resolve, reject) => {
@@ -284,30 +282,52 @@ class YodleeApiHandler{
     }
 
 
+    /**
+    * This function retrieves all transactions from yodlee 
+    * Input: auth object which has properties cobSession and userSession 
+    */
+
+    uploadAllTransactions(auth){
+
+        var accountIDArray = [10782289]; 
+
+        //for (var accountID in accountIDArray){
+        var accountID = 1
+        this.uploadTransactions(auth, accountID);
+        //}
+
+        this.appResponse.send("Uploading Transactions");
+
+    }
+
+
 
     /**
     * This function retrieves all transactions from yodlee 
     * Input: auth object which has properties cobSession and userSession 
     */
 
-    uploadTransactions(auth){
-
-        
+    uploadTransactions(auth, accountID){
 
         var appResponse = this.appResponse;
         
         var transactionOptions = Object.assign(this.defaultOptions); //clone options (do not want to change original default options object)
         transactionOptions.method = 'GET';
-        transactionOptions.url = this.base_url + 'transactions?fromDate=2011-06-01&toDate=2017-06-01&&&&&&&';
+        transactionOptions.url = this.base_url + 'transactions';
         transactionOptions.headers.Authorization = '{cobSession=' + auth.cobSession + ', userSession=' + auth.userSession + '}';
-        transactionOptions.headers.accountId = '11497000'; 
-        transactionOptions.headers.fromDate = '2011-06-01'; 
-        transactionOptions.headers.fromDate = '2018-03-01'; 
+        //transactionOptions.params.accountId = '11497000,11496949,11496948'; 
+        transactionOptions.params.accountId = '11496947,11496946,11496945'; 
+        transactionOptions.params.fromDate = '2011-06-01'; 
+        transactionOptions.params.toDate = '2016-06-01'; 
        
+        console.log(transactionOptions);
+
+
         // request(transactionOptions, this.saveTransactionsToMongo);
 
         axios(transactionOptions)
             .then((response) => {
+                console.log(response);
                 return response.data.transaction
             })
             .then((data) => {
@@ -338,13 +358,15 @@ class YodleeApiHandler{
             })
             .then((transactionData) => {
                 this.saveToMongo(transactionData, "yodlee_transactions");
-                this.appResponse.send("Saving transactions to Mongo:<br><br>" + JSON.stringify(transactionData, null, 2));
+                //this.appResponse.send("Saving transactions to Mongo:<br><br>" + JSON.stringify(transactionData, null, 2));
                 return transactionData;
             })
             .catch((error) => {
-                this.appResponse.send("error");
+                //this.appResponse.send("error");
                 console.log("Error: " + error)
             })
+
+           // this.appResponse.send("Uploading Transactions");
     }
 
     /**

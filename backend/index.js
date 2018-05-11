@@ -13,6 +13,7 @@ var MongoClient = require('mongodb').MongoClient
 var dbname = "mydb"
 var url = "mongodb://localhost:27017/" + dbname;
 var MacquarieApiHandler = require('./macquarie/MacquarieApiHandler_v2.js')
+var MacquarieApiHandler3 = require('./macquarie/MacquarieApiHandler_v3.js')
 var YodleeApiHandler = require('./macquarie/YodleeApiHandler.js')
 var db
 
@@ -96,6 +97,18 @@ app.get('/dbTest', (req, res) => {
     res.send(start)
 })
 
+/*  / provider handshake handler, should ensure we have permission to read transactions
+ * / from the requested bank
+ */
+app.get('/prov_handshake', (req, res) => {
+    let handler = new MacquarieApiHandler3(db);
+
+    // if no tokens for this user exist, run initial handshake
+
+    handler.providerInitialHandshake(req, res);
+
+})
+
 /*
  * /transactions route responds with array containing all transaction records stored in 'transactions' collection the database
  */
@@ -165,11 +178,20 @@ app.use(bodyParser.urlencoded({ extended: false }));
  * This code is then used to obtain an access token and/or refresh token.  These tokens are required to make transaction/account/balance api calls.
  */
 
-app.get('/callback', (req, res) => {
+app.get('/callback/:provider', (req, res) => {
   	
     console.log("callback");   
- 
-    let handler = new MacquarieApiHandler(db);
+    console.log("CONFIRM WHO THIS CALLBACK IS FOR");
+    console.log(req.params.provider);
+    var handler;
+    
+    if (req.params.provider == 'macquarie'){
+        handler = new MacquarieApiHandler(db);
+    }else{
+        console.log("NO HANDLER SPECIFIED");
+        res.send("An error has occured.");
+        return;
+    }
 
     handler.getTransactions(req)
     //handler.getAccounts(req)
@@ -222,6 +244,15 @@ app.get('/reset_yodlee_accounts', (req, res) => {
     db.collection("yodlee_accounts").drop();
     res.send("Dropped");
 })
+
+
+app.get('/reset_yodlee_transactions', (req, res) => {
+  
+    db.collection("yodlee_transactions").drop();
+    res.send("Dropped");
+})
+
+
 
 
 
@@ -317,7 +348,7 @@ app.get('/yodlee_uploadTransactions', (req, res) => {
  
     let handler = new YodleeApiHandler(db);
 
-    handler.doAuth(res, handler.uploadTransactions);
+    handler.doAuth(res, handler.uploadAllTransactions);
 
 })
 
