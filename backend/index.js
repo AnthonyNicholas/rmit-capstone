@@ -186,16 +186,18 @@ app.get('/callback/:provider', (req, res) => {
     var handler;
     
     if (req.params.provider == 'macquarie'){
-        handler = new MacquarieApiHandler(db);
+        handler = new MacquarieApiHandler3(db);
     }else{
         console.log("NO HANDLER SPECIFIED");
         res.send("An error has occured.");
         return;
     }
 
-    handler.getTransactions(req)
+    //handler.getTransactions(req)
     //handler.getAccounts(req)
     //handler.getBalances(req)
+    //
+    handler.clientRedirect(req, res);
 
 	res.send("success") 
 
