@@ -14,8 +14,17 @@ Fintech is a fast moving and growing industry and open banking is coming to Aust
 
 ## Technology Background/Exposure to:
 
-New open banking framework
-JavaScript Front and Back
-MongoDB
-Cloud hosted solution
+ - New open banking framework
+ - JavaScript Front and Back
+ - MongoDB
+ - Cloud hosted solution
 
+## Installation
+
+This repository consists of two nodejs projects.
+
+/backend contains an express server project that handles API requests to our Open Banking API access handling resource.
+
+/frontend contains a react driven frontend server demonstrating how the above API can be used/implemented.
+
+Please check each respective README for details on how to provision each server.
