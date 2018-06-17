@@ -12,7 +12,7 @@ const axios = require('axios');
  * This class contains all methods requires to communicate with the Macquarie Open Banking Api (see documentation at
  * https://developer.macquariebank.io/devportal/v1/)
  */
-
+ 
 class MacquarieApiHandler{
 
     constructor(db) {
