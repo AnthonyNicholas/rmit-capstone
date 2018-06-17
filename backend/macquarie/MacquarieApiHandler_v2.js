@@ -8,6 +8,8 @@ const request = require('request')
 const axios = require('axios');
 //import TransactionApiHandler from './TransactionApiHandler.js'
 
+const config = require('../config')
+
 /*MacquarieApiHandler extends TransactionApiHandler
  * This class contains all methods requires to communicate with the Macquarie Open Banking Api (see documentation at
  * https://developer.macquariebank.io/devportal/v1/)
@@ -19,8 +21,8 @@ class MacquarieApiHandler{
         this.db = db
         this.base_url = "https://sandbox.api.macquariebank.io/connect/v1"
         this.oauth_uri = this.base_url + '/oauth2/token' 
-        this.mac_client_id = "jnmGHTIozAcaSwCJx2ImVqKQk1fun9HE"
-        this.mac_client_secret = "ABoD6PubD0k21AbX"
+        this.mac_client_id = config.macquarie.client_id
+        this.mac_client_secret = config.macquarie.client_secret
         this.mac_content_type = "application/x-www-form-urlencoded" 
         this.mac_transaction_uri = this.base_url + '/accounts/084c4df6-a805-42d6-939e-2db7c3d50ded/transactions'
 		this.transaction_route = '/accounts/084c4df6-a805-42d6-939e-2db7c3d50ded/transactions'
