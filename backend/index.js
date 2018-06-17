@@ -380,7 +380,7 @@ app.get('/yodlee_sync', (req, res) => {
     // Run a transaction sync
     let handler = new YodleeApiHandler(db);
     
-    res.write("Rnning Transaction Sync");
+    res.write("Running Transaction Sync");
     handler.doAuth(res, handler.uploadTransactions);
 
 })
