@@ -14,8 +14,23 @@ Fintech is a fast moving and growing industry and open banking is coming to Aust
 
 ## Technology Background/Exposure to:
 
-New open banking framework
-JavaScript Front and Back
-MongoDB
-Cloud hosted solution
+ - New open banking framework
+ - JavaScript Front and Back
+ - MongoDB
+ - Cloud hosted solution
 
+## Installation
+Ensure npm package manager is installed.
+
+Run the following:
+```
+# Install all required npm dependancies
+npm install
+
+# Run the express server and backend API 
+npm start
+```
+
+Make sure to register with Macquarie Bank in order to use their APIs and add your client key and secret to /backend/config.js
+
+Register here: https://developer.macquariebank.io/
