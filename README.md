@@ -1,9 +1,15 @@
 # RMIT Capstone project
 
-Capstone project with Empower Wealth.
+Capstone project with Financial Planning firm.
 
 ## RMIT Project Description
-Fintech is a fast moving and growing industry and open banking is coming to Australian Banks this year.  Money SMARTS is proprietary personal money management system developed by Empower Wealth. As an extension to its base functionality – the next phase Money SMART will incorporate a feed of the user’s expenditure to keep track automatically their budget. The project will involve the team investigating the new open banking API available or existing data extraction vendors as a solution. The aim is to develop capture, mapping and tracking software to integrate a proposed solution into Money SMARTS outlining how this can be done in the most effective and cost-efficient manner.
+
+This project involved the creation of a system to provide real-time transaction and account data from open banking APIs in a standard, easily usable format to Financial Planning firms such as our client.
+
+We have also provided a report to our client regarding their options in making use of this data when it becomes available, whether through our system or other providers (including consideration of factors such as cost and security).
+
+The background to this project is the impending Australian Open Banking legislation.  It is anticipated that the Federal Government will require banks to make transaction and account information available via API starting in mid 2019.   This will empower customers to direct their bank to send their data to another provider.  Some banks (such as Macquarie Bank) have already created APIs to allow this.  
+
 ## Desired Outcomes
 
 1) Vendor review of the best available solution, including a comparison to an in-house build with open banking API.
