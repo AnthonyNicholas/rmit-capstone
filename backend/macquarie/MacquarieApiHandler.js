@@ -18,8 +18,8 @@ class MacquarieApiHandler{
     constructor() {
         this.base_url = "https://sandbox.api.macquariebank.io/connect/v1"
         this.oauth_uri = this.base_url + '/oauth2/token' 
-        this.mac_client_id = "61sdGiAuzyFb3rmyMoNF7swey7XXOmcu"
-        this.mac_client_secret = "9HauKBRTOD3O2rZj"
+        this.mac_client_id = config.macquarie.client_id
+        this.mac_client_secret = config.macquarie.client_secret
         this.mac_content_type = "application/x_www_form_urlencoded" 
         this.mac_transaction_uri = this.base_url + '/accounts/' + this.mac_client_id
 	this.waiting = false
